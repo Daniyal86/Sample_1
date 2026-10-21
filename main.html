@@ -1010,13 +1010,17 @@ main{position:relative;z-index:1;overflow-x:clip}
 }
 
 .story-card-art{
+  width:100%;
   max-width:30rem;
   margin:0 auto 16px;
   border-radius:6px;
   overflow:hidden;
+  display:block;
 }
 .story-card-art .art{
   width:100%;
+  height:auto;
+  display:block;
   --f:7%;
   border-radius:6px;
 }
@@ -1053,6 +1057,7 @@ main{position:relative;z-index:1;overflow-x:clip}
   .story-card-art{
     max-width:none;
     margin:0;
+    width:100%;
   }
   .story-card-art .art{
     max-height:360px;
@@ -1084,31 +1089,56 @@ main{position:relative;z-index:1;overflow-x:clip}
 
 /* Mobile Screens (< 820px) */
 @media (max-width: 819px){
-  .story-scroll-stack{max-width:28rem}
+  .story-scroll-stack{
+    max-width:26rem;
+    padding:0 8px;
+  }
   .story-stack-card{
     display:flex;
     flex-direction:column;
-    padding:20px 18px;
-    top:clamp(45px, 7vh, 75px);
-    margin-bottom:clamp(120px, 28vh, 200px);
+    align-items:center;
+    padding:20px 18px 24px;
+    top:clamp(45px, 6vh, 75px);
+    margin-bottom:clamp(120px, 26vh, 180px);
     text-align:center;
+    width:100%;
+    box-sizing:border-box;
+  }
+  .story-card-content{
+    display:contents;
   }
   .story-card-badge-wrap{
+    order:1;
     text-align:center;
     margin-bottom:12px;
+    width:100%;
   }
   .story-card-art{
-    max-width:22rem;
-    margin:0 auto 12px;
+    order:2;
+    width:100%;
+    max-width:min(20rem, 82vw);
+    margin:0 auto 14px;
+    display:flex;
+    justify-content:center;
   }
   .story-card-art .art{
-    max-height:clamp(170px, 28vh, 230px);
-    border-radius:4px;
+    width:100%;
+    max-height:clamp(170px, 26vh, 220px);
+    border-radius:6px;
+  }
+  .story-card-body{
+    order:3;
+    width:100%;
   }
   .story-card-body p{
-    font-size:1.05rem;
-    line-height:1.65;
+    font-size:1.02rem;
+    line-height:1.68;
     text-align:center;
+    margin:0 auto;
+    max-width:24rem;
+  }
+  .story-card-body p + p{
+    margin-top:8px;
   }
 }
 
