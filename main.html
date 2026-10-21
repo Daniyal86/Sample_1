@@ -960,9 +960,11 @@ main{position:relative;z-index:1;overflow-x:clip}
 }
 
 /* Scroll-Driven Overlapping Story Cards Stack */
+#story .column{max-width:58rem}
+
 .story-scroll-stack{
   position:relative;
-  max-width:38rem;
+  max-width:54rem;
   margin:32px auto 0;
   display:flex;
   flex-direction:column;
@@ -971,19 +973,18 @@ main{position:relative;z-index:1;overflow-x:clip}
 
 .story-stack-card{
   position:sticky;
-  top:clamp(55px, 11vh, 85px);
-  margin-bottom:clamp(130px, 32vh, 230px);
+  top:clamp(50px, calc(50vh - 190px), 110px);
+  margin-bottom:clamp(140px, 36vh, 260px);
   width:100%;
   background:linear-gradient(172deg, #FFFFFF 0%, #FCF8F1 50%, #FAF0DF 100%);
-  border-radius:10px;
+  border-radius:12px;
   border:2px solid rgba(212, 175, 55, 0.5);
   box-shadow:
     0 -10px 30px rgba(50, 15, 10, 0.16),
     0 28px 70px -10px rgba(50, 15, 10, 0.36),
     0 0 0 1px rgba(212, 175, 55, 0.4),
     inset 0 0 40px rgba(212, 175, 55, 0.04);
-  padding:clamp(24px, 5vw, 38px) clamp(18px, 4vw, 32px);
-  text-align:center;
+  padding:28px 32px;
   transform-origin:center top;
 }
 
@@ -993,7 +994,7 @@ main{position:relative;z-index:1;overflow-x:clip}
 .story-stack-card:nth-child(4){ z-index:4; }
 .story-stack-card:nth-child(5){ z-index:5; margin-bottom:0; }
 
-.story-card-badge-wrap{margin-bottom:14px;text-align:center}
+.story-card-badge-wrap{margin-bottom:12px;text-align:center}
 .story-card-badge{
   display:inline-block;
   padding:4px 18px;
@@ -1011,21 +1012,17 @@ main{position:relative;z-index:1;overflow-x:clip}
 .story-card-art{
   max-width:30rem;
   margin:0 auto 16px;
-  border-radius:4px;
+  border-radius:6px;
   overflow:hidden;
 }
 .story-card-art .art{
   width:100%;
   --f:7%;
-  border-radius:4px;
+  border-radius:6px;
 }
 
-.story-card-body{
-  margin-top:12px;
-}
 .story-card-body p{
   margin:0 auto;
-  max-width:32rem;
   font-size:1.15rem;
   line-height:1.8;
   text-align:left;
@@ -1037,6 +1034,82 @@ main{position:relative;z-index:1;overflow-x:clip}
 }
 .story-card-body p + p{
   margin-top:10px;
+}
+
+/* PC / Desktop 2-Column Book Layout */
+@media (min-width: 820px){
+  #story .column{max-width:58rem}
+  .story-scroll-stack{max-width:54rem}
+  .story-stack-card{
+    display:grid;
+    grid-template-columns:1fr 1.15fr;
+    gap:32px;
+    align-items:center;
+    text-align:left;
+    padding:30px 36px;
+    top:clamp(60px, calc(50vh - 200px), 120px);
+    margin-bottom:clamp(160px, 42vh, 280px);
+  }
+  .story-card-art{
+    max-width:none;
+    margin:0;
+  }
+  .story-card-art .art{
+    max-height:360px;
+    border-radius:6px;
+  }
+  .story-card-content{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .story-card-badge-wrap{
+    text-align:left;
+    margin-bottom:12px;
+  }
+  .story-card-body{
+    margin-top:0;
+  }
+  .story-card-body p{
+    margin:0;
+    max-width:none;
+    font-size:1.15rem;
+    line-height:1.85;
+    text-align:left;
+  }
+  .story-card-body p + p{
+    margin-top:12px;
+  }
+}
+
+/* Mobile Screens (< 820px) */
+@media (max-width: 819px){
+  .story-scroll-stack{max-width:28rem}
+  .story-stack-card{
+    display:flex;
+    flex-direction:column;
+    padding:20px 18px;
+    top:clamp(45px, 7vh, 75px);
+    margin-bottom:clamp(120px, 28vh, 200px);
+    text-align:center;
+  }
+  .story-card-badge-wrap{
+    text-align:center;
+    margin-bottom:12px;
+  }
+  .story-card-art{
+    max-width:22rem;
+    margin:0 auto 12px;
+  }
+  .story-card-art .art{
+    max-height:clamp(170px, 28vh, 230px);
+    border-radius:4px;
+  }
+  .story-card-body p{
+    font-size:1.05rem;
+    line-height:1.65;
+    text-align:center;
+  }
 }
 
 /* Narrative text flow */
@@ -1845,7 +1918,11 @@ main{position:relative;z-index:1;overflow-x:clip}
         body.append(p);
       });
 
-      card.append(badgeWrap, artWrap, body);
+      // Content wrapper for badge & story text
+      const content = el('div', 'story-card-content');
+      content.append(badgeWrap, body);
+
+      card.append(artWrap, content);
       corners(card);
       stack.append(card);
 
